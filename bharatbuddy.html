@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#FF6B35" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="BharatBuddy" />
+<title>BharatBuddy — India in One Tap</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='%23FF6B35'/><stop offset='1' stop-color='%23FFB627'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-size='34' font-weight='800' text-anchor='middle' fill='white' font-family='sans-serif'>B</text></svg>" />
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='%23FF6B35'/><stop offset='1' stop-color='%23FFB627'/></linearGradient></defs><rect width='180' height='180' rx='40' fill='url(%23g)'/><text x='90' y='125' font-size='100' font-weight='800' text-anchor='middle' fill='white' font-family='sans-serif'>B</text></svg>" />
+
+<style>
+:root{--saffron:#FF6B35;--saffron-dark:#E25420;--indigo:#1E3A8A;--indigo-dark:#14235A;--gold:#FFB627;--cream:#FFF8E7;--warm:#FFFBF2;--ink:#1A1A2E;--muted:#6B7280;--line:#EDE7D5;--sos:#E63946;--good:#10B981;--card:#FFFFFF;--shadow:0 10px 30px rgba(20,35,90,.08);--shadow-lg:0 20px 50px rgba(20,35,90,.18)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;background:radial-gradient(1200px 600px at 10% -10%,rgba(255,107,53,.18),transparent 60%),radial-gradient(1000px 500px at 110% 20%,rgba(30,58,138,.18),transparent 60%),linear-gradient(180deg,#FFF4E0 0%,#F5EFFF 100%);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;overflow-x:hidden}
+@media (max-width:480px){body{padding:0;align-items:flex-start;background:#0b0b14}.stage{grid-template-columns:1fr!important;gap:0!important;max-width:none!important}.pitch{display:none!important}.phone{width:100vw!important;height:100vh!important;border-radius:0!important;padding:0!important;box-shadow:none!important}.phone::before{display:none!important}.screen-container{border-radius:0!important}.status-bar{display:none!important}.screen{padding-top:0!important}.hero,.genie-head,.sos-hero,.profile-head{padding-top:46px!important}}
+
+.stage{display:grid;grid-template-columns:1fr 390px 1fr;gap:32px;align-items:center;max-width:1400px;width:100%}
+.pitch{padding:12px}
+.pitch .brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.pitch .logo-dot{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--gold));display:grid;place-items:center;color:white;font-weight:800;box-shadow:var(--shadow)}
+.pitch h1{font-size:42px;line-height:1.1;margin-bottom:10px;background:linear-gradient(90deg,var(--indigo),var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px}
+.pitch h1 small{display:block;font-size:16px;color:var(--muted);font-weight:500;margin-top:6px;-webkit-text-fill-color:var(--muted)}
+.pitch p.tag{font-size:17px;color:#3c4256;line-height:1.55;margin-bottom:18px}
+.pitch .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.pitch .chip{padding:6px 12px;border-radius:999px;background:white;border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--indigo)}
+.pitch .chip.saffron{background:var(--saffron);color:white;border-color:var(--saffron)}
+.pitch .note{background:rgba(255,255,255,.7);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:13.5px;color:#434a63;line-height:1.55;margin-bottom:12px}
+.pitch .note b{color:var(--indigo)}
+.install-btn{width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--indigo),#4F46E5);color:white;font-size:14px;font-weight:800;font-family:inherit;box-shadow:0 8px 20px rgba(30,58,138,.3);display:flex;align-items:center;justify-content:center;gap:8px}
+.install-btn:disabled{opacity:.6;cursor:default}
+
+.right-pitch h3{font-size:18px;color:var(--indigo);margin-bottom:12px}
+.feature-list{display:flex;flex-direction:column;gap:10px}
+.feature-list .item{background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 14px rgba(30,58,138,.06)}
+.feature-list .icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--saffron),var(--gold));display:grid;place-items:center;color:white;font-size:18px}
+.feature-list .item .t{font-weight:700;color:var(--ink);font-size:14px}
+.feature-list .item .d{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:2px}
+
+.phone{width:390px;height:820px;background:#0b0b14;border-radius:52px;padding:14px;box-shadow:var(--shadow-lg),inset 0 0 0 1.5px rgba(255,255,255,.05);position:relative;margin:0 auto}
+.phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:110px;height:26px;background:#000;border-radius:14px;z-index:20}
+.screen-container{width:100%;height:100%;background:var(--warm);border-radius:40px;overflow:hidden;position:relative}
+.status-bar{position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:13px;font-weight:700;z-index:15;pointer-events:none}
+.status-bar .dots{display:flex;gap:4px}
+.status-bar .dots span{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.8}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transform:translateX(20px);transition:opacity .25s ease,transform .25s ease;padding-top:44px;padding-bottom:100px}
+.screen.active{opacity:1;pointer-events:auto;transform:translateX(0)}
+.screen::-webkit-scrollbar{display:none}
+
+.hero{padding:14px 20px 22px;background:linear-gradient(135deg,#FF6B35 0%,#E63946 55%,#1E3A8A 100%);color:white;border-radius:0 0 28px 28px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,182,39,.6),transparent 70%)}
+.hero .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;position:relative;z-index:1}
+.hero .greet{font-size:13px;opacity:.9}
+.hero .greet b{display:block;font-size:18px;font-weight:800;margin-top:2px}
+.hero .avatar{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);backdrop-filter:blur(8px);display:grid;place-items:center;font-weight:800;font-size:16px;border:1.5px solid rgba(255,255,255,.4);cursor:pointer}
+.hero h2{font-size:24px;line-height:1.25;font-weight:800;position:relative;z-index:1;margin-bottom:14px;letter-spacing:-.3px}
+.hero h2 span{color:var(--gold)}
+.search{background:rgba(255,255,255,.95);border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 20px rgba(0,0,0,.12);position:relative;z-index:1}
+.search input{border:none;outline:none;flex:1;font-size:14px;color:var(--ink);background:transparent;font-weight:500}
+.search input::placeholder{color:var(--muted)}
+
+.quick-actions{padding:18px 20px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.qa{background:white;border-radius:16px;padding:14px 6px;text-align:center;cursor:pointer;border:1px solid var(--line);transition:transform .15s,box-shadow .15s;box-shadow:0 3px 10px rgba(20,35,90,.04)}
+.qa:hover,.qa:active{transform:translateY(-2px);box-shadow:0 8px 18px rgba(255,107,53,.15)}
+.qa .qa-icon{width:38px;height:38px;border-radius:12px;margin:0 auto 6px;display:grid;place-items:center;font-size:18px;color:white}
+.qa .qa-label{font-size:11px;font-weight:700;color:var(--ink);line-height:1.2}
+.qa.stay .qa-icon{background:linear-gradient(135deg,#FF6B35,#FFB627)}
+.qa.eat .qa-icon{background:linear-gradient(135deg,#E63946,#FF6B35)}
+.qa.ride .qa-icon{background:linear-gradient(135deg,#1E3A8A,#4F46E5)}
+.qa.plan .qa-icon{background:linear-gradient(135deg,#10B981,#059669)}
+
+.sec{padding:18px 20px 8px}
+.sec .sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.sec-head h3{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.2px}
+.sec-head .link{font-size:12.5px;color:var(--saffron);font-weight:700;cursor:pointer}
+
+.dest-row{display:flex;gap:12px;padding:0 20px 4px;overflow-x:auto;scroll-snap-type:x mandatory}
+.dest-row::-webkit-scrollbar{display:none}
+.dest-card{min-width:180px;height:220px;border-radius:18px;position:relative;overflow:hidden;cursor:pointer;scroll-snap-align:start;box-shadow:0 8px 20px rgba(0,0,0,.12);transition:transform .2s}
+.dest-card:active{transform:scale(.97)}
+.dest-card .bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#ccc}
+.dest-card .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.75) 100%)}
+.dest-card .meta{position:absolute;bottom:12px;left:12px;right:12px;color:white}
+.dest-card .name{font-size:16px;font-weight:800}
+.dest-card .sub{font-size:11px;opacity:.85;margin-top:2px}
+.dest-card .badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);color:white;font-size:10px;font-weight:700;padding:4px 8px;border-radius:999px}
+.dest-card .heart-btn{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border:none;cursor:pointer;display:grid;place-items:center;font-size:14px;color:#9ca3af;transition:color .15s,transform .15s}
+.dest-card .heart-btn.fav{color:var(--sos);transform:scale(1.15)}
+
+.copilot{margin:18px 20px 6px;background:linear-gradient(135deg,#1E3A8A,#4F46E5);border-radius:18px;padding:16px;color:white;position:relative;overflow:hidden;cursor:pointer}
+.copilot::after{content:"🧭";position:absolute;right:-10px;bottom:-20px;font-size:100px;opacity:.1}
+.copilot .lbl{font-size:10px;font-weight:800;letter-spacing:1px;opacity:.8;text-transform:uppercase;margin-bottom:6px}
+.copilot .tip-text{font-size:13.5px;line-height:1.45;font-weight:500}
+.copilot .tip-text b{color:var(--gold)}
+
+.sos-float{position:absolute;right:18px;bottom:100px;z-index:12;width:54px;height:54px;border-radius:50%;background:var(--sos);color:white;font-weight:800;font-size:13px;display:grid;place-items:center;cursor:pointer;border:none;box-shadow:0 8px 24px rgba(230,57,70,.5);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 8px 24px rgba(230,57,70,.5),0 0 0 0 rgba(230,57,70,.4)}50%{box-shadow:0 8px 24px rgba(230,57,70,.5),0 0 0 12px rgba(230,57,70,0)}}
+
+.bottom-nav{position:absolute;left:10px;right:10px;bottom:10px;z-index:14;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:20px;padding:10px 6px;display:grid;grid-template-columns:repeat(5,1fr);box-shadow:0 10px 30px rgba(20,35,90,.12)}
+.bn{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;color:var(--muted);font-size:10px;font-weight:700;border-radius:12px;transition:color .15s}
+.bn svg{width:22px;height:22px}
+.bn.active{color:var(--saffron)}
+.bn.sos-nav{color:var(--sos)}
+
+.page-head{padding:10px 16px 16px;display:flex;align-items:center;gap:12px;background:var(--warm);position:sticky;top:44px;z-index:5}
+.back-btn{width:36px;height:36px;border-radius:50%;background:white;border:1px solid var(--line);cursor:pointer;display:grid;place-items:center;color:var(--ink);font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.04)}
+.page-head h2{font-size:20px;font-weight:800;letter-spacing:-.3px}
+
+.dest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px}
+.dest-grid .dest-card{min-width:0;height:180px}
+
+.filter-row{padding:0 16px 12px;display:flex;gap:8px;overflow-x:auto}
+.filter-row::-webkit-scrollbar{display:none}
+.filter-row .f{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:white;font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap;cursor:pointer}
+.filter-row .f.on{background:var(--ink);color:white;border-color:var(--ink)}
+
+.search-results{padding:0 16px}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px}
+.empty .big{font-size:42px;margin-bottom:10px}
+
+.dd-hero{height:260px;position:relative;margin:0 -20px;background-size:cover;background-position:center;background-color:#888}
+.dd-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.7) 100%)}
+.dd-hero .back-abs{position:absolute;top:54px;left:16px;z-index:3;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;font-weight:800;cursor:pointer}
+.dd-hero .heart{position:absolute;top:54px;right:16px;z-index:3;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;cursor:pointer;color:#9ca3af;font-size:17px;border:none;transition:transform .15s,color .15s}
+.dd-hero .heart.fav{color:var(--sos);transform:scale(1.15)}
+.dd-hero .dd-title{position:absolute;bottom:16px;left:20px;right:20px;color:white;z-index:2}
+.dd-hero .dd-title h1{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.dd-hero .dd-title .sub{margin-top:4px;font-size:13px;opacity:.9;display:flex;align-items:center;gap:12px}
+.dd-body{padding:16px 20px 20px}
+.dd-about{font-size:13.5px;color:#434a63;line-height:1.55;margin-bottom:16px}
+.dd-tabs{display:grid;grid-template-columns:repeat(4,1fr);background:white;border-radius:14px;padding:4px;border:1px solid var(--line);margin-bottom:16px}
+.dd-tab{padding:9px 4px;text-align:center;font-size:12px;font-weight:700;color:var(--muted);border-radius:10px;cursor:pointer}
+.dd-tab.active{background:var(--saffron);color:white}
+
+.list-card{background:white;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.list-card .thumb{width:64px;height:64px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0;background-color:#ddd}
+.list-card .info{flex:1;min-width:0}
+.list-card .title{font-size:14px;font-weight:800;display:flex;align-items:center;gap:5px}
+.list-card .title .ver{width:14px;height:14px;border-radius:50%;background:var(--good);color:white;font-size:10px;display:grid;place-items:center}
+.list-card .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+.list-card .meta{font-size:11px;color:#434a63;margin-top:4px;display:flex;gap:10px;align-items:center}
+.list-card .meta .rating{color:var(--gold);font-weight:800}
+.list-card .price{text-align:right;font-weight:800;font-size:15px;color:var(--indigo);flex-shrink:0}
+.list-card .price small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}
+.list-card .book{padding:8px 12px;border:none;border-radius:10px;cursor:pointer;background:var(--saffron);color:white;font-size:12px;font-weight:800;font-family:inherit;margin-top:4px}
+
+.genie-head{padding:14px 20px 22px;background:linear-gradient(135deg,#10B981,#1E3A8A);color:white;border-radius:0 0 24px 24px;position:relative}
+.genie-head h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.genie-head p{font-size:13px;opacity:.9}
+.genie-head .sparkle{position:absolute;right:18px;top:50px;font-size:48px;opacity:.25}
+.genie-form{padding:18px 20px}
+.field{margin-bottom:14px}
+.field label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.field input,.field textarea,.field select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:white;font-size:14px;font-weight:500;font-family:inherit;outline:none;color:var(--ink)}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
+.field textarea{resize:none;min-height:74px}
+
+.pill-row{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:white;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink);transition:all .15s}
+.pill.on{background:var(--saffron);color:white;border-color:var(--saffron)}
+
+.primary-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));color:white;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 10px 22px rgba(255,107,53,.35);font-family:inherit;transition:transform .1s}
+.primary-btn:active{transform:scale(.98)}
+.primary-btn.indigo{background:linear-gradient(135deg,var(--indigo),var(--indigo-dark));box-shadow:0 10px 22px rgba(30,58,138,.35)}
+.primary-btn.sos{background:var(--sos);box-shadow:0 10px 22px rgba(230,57,70,.4)}
+.primary-btn.ghost{background:transparent;color:var(--ink);box-shadow:none;border:1.5px solid var(--line)}
+
+.itin{padding:0 20px 20px;display:none}
+.itin.show{display:block}
+.itin-card{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.itin-day{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.itin-day .num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));color:white;font-weight:800;display:grid;place-items:center;font-size:14px}
+.itin-day .title{font-size:15px;font-weight:800}
+.itin-day .loc{font-size:11.5px;color:var(--muted);margin-top:1px}
+.itin-step{padding:8px 0 8px 42px;border-left:2px dashed var(--line);margin-left:15px;position:relative}
+.itin-step::before{content:"";position:absolute;left:-6px;top:14px;width:10px;height:10px;border-radius:50%;background:white;border:2px solid var(--saffron)}
+.itin-step .time{font-size:10px;font-weight:800;color:var(--saffron);text-transform:uppercase;letter-spacing:.5px}
+.itin-step .act{font-size:13px;font-weight:700;margin-top:2px}
+.itin-step .desc{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.itin-step .cost{font-size:11px;color:var(--indigo);font-weight:700;margin-top:3px}
+.budget-summary{background:linear-gradient(135deg,#FFF4E0,#FFFBF2);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bs-row{display:flex;justify-content:space-between;font-size:12px}
+.bs-row b{color:var(--indigo)}
+.bs-total{grid-column:1/-1;padding-top:8px;margin-top:4px;border-top:1px dashed var(--line);font-size:14px;font-weight:800;display:flex;justify-content:space-between;color:var(--indigo)}
+
+.sos-hero{padding:20px;background:linear-gradient(135deg,#E63946,#7A1E1E);color:white;text-align:center;border-radius:0 0 28px 28px;position:relative}
+.sos-hero .ring{width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;margin:6px auto 10px;font-size:42px;animation:pulse 2s infinite}
+.sos-hero h2{font-size:22px;font-weight:800}
+.sos-hero p{font-size:13px;opacity:.9;margin-top:4px}
+.sos-big-btn{margin:18px 20px;width:calc(100% - 40px);padding:16px;border-radius:16px;border:none;cursor:pointer;background:var(--sos);color:white;font-size:17px;font-weight:800;box-shadow:0 10px 30px rgba(230,57,70,.4);font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px}
+.sos-grid{padding:0 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sos-tile{background:white;border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:center;cursor:pointer}
+.sos-tile:active{transform:scale(.97)}
+.sos-tile .ico{font-size:26px;margin-bottom:6px}
+.sos-tile .t{font-size:13px;font-weight:800;color:var(--ink)}
+.sos-tile .d{font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+
+.trip-ticket{margin:0 16px 12px;background:white;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+.trip-ticket .tt-header{padding:12px 14px;background:linear-gradient(135deg,var(--indigo),#4F46E5);color:white;display:flex;justify-content:space-between;align-items:center}
+.trip-ticket .tt-type{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;opacity:.9}
+.trip-ticket .tt-status{background:rgba(255,255,255,.2);padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700}
+.trip-ticket .tt-body{padding:14px}
+.trip-ticket .tt-title{font-size:15px;font-weight:800}
+.trip-ticket .tt-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.trip-ticket .tt-row{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;font-size:12px}
+.trip-ticket .tt-row b{color:var(--ink);display:block;font-size:13px;margin-top:1px;font-weight:800}
+.trip-ticket .tt-cancel{margin-top:10px;background:none;border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:700;font-size:11.5px;font-family:inherit}
+
+.modal-bg{position:absolute;inset:0;background:rgba(10,15,35,.55);backdrop-filter:blur(4px);z-index:30;display:none;align-items:flex-end;justify-content:center;border-radius:40px;overflow:hidden}
+.modal-bg.show{display:flex}
+.modal{width:100%;background:white;border-radius:28px 28px 0 0;padding:22px 20px 28px;animation:slideUp .3s;max-height:85%;overflow-y:auto}
+@media (max-width:480px){.modal-bg{border-radius:0}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal h3{font-size:18px;font-weight:800;margin-bottom:8px}
+.modal p{font-size:13.5px;color:#434a63;line-height:1.55;margin-bottom:14px}
+.modal .close-x{position:absolute;top:14px;right:18px;width:32px;height:32px;border-radius:50%;background:#F3F4F6;border:none;cursor:pointer;display:grid;place-items:center;font-weight:800;z-index:2}
+.lang-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.lang-chip{padding:7px 12px;border-radius:10px;background:#F3F4F6;font-size:12px;font-weight:700;cursor:pointer;border:1px solid transparent}
+.lang-chip.on{background:var(--saffron);color:white}
+
+.onboard{position:absolute;inset:0;z-index:50;background:linear-gradient(155deg,#FF6B35 0%,#E63946 50%,#1E3A8A 100%);color:white;padding:44px 28px 28px;display:none;flex-direction:column;overflow-y:auto;border-radius:40px}
+@media (max-width:480px){.onboard{border-radius:0}}
+.onboard.show{display:flex}
+.onboard .logo{margin:30px auto 20px;width:84px;height:84px;border-radius:22px;background:white;color:var(--saffron);display:grid;place-items:center;font-size:44px;font-weight:900;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.onboard h1{font-size:30px;font-weight:800;text-align:center;letter-spacing:-.5px}
+.onboard .sub-hero{text-align:center;font-size:14px;opacity:.9;margin-top:8px;margin-bottom:24px;line-height:1.5}
+.onboard .step{display:none}
+.onboard .step.on{display:block}
+.onboard .of-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.8;margin-bottom:6px}
+.onboard input,.onboard select{width:100%;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);font-size:15px;font-weight:500;color:white;outline:none;font-family:inherit;margin-bottom:14px}
+.onboard input::placeholder{color:rgba(255,255,255,.6)}
+.onboard select option{color:var(--ink)}
+.onboard .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.onboard .choice{padding:16px 10px;border-radius:14px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);text-align:center;cursor:pointer;font-weight:700;font-size:13px}
+.onboard .choice.on{background:white;color:var(--saffron);border-color:white}
+.onboard .choice .big{font-size:26px;display:block;margin-bottom:4px}
+.onboard .obtn{margin-top:auto;padding:16px;border-radius:14px;border:none;background:white;color:var(--saffron);font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.onboard .skip{text-align:center;font-size:13px;margin-top:12px;opacity:.75;cursor:pointer;text-decoration:underline}
+
+.profile-head{padding:28px 20px 18px;background:linear-gradient(135deg,var(--indigo),#4F46E5);color:white;border-radius:0 0 24px 24px;text-align:center}
+.profile-head .avatar-big{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));display:grid;place-items:center;margin:0 auto 10px;font-size:32px;font-weight:800;border:3px solid rgba(255,255,255,.3)}
+.profile-head .name{font-size:19px;font-weight:800}
+.profile-head .email{font-size:12px;opacity:.85;margin-top:2px}
+.profile-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.profile-stat .s{background:rgba(255,255,255,.15);border-radius:12px;padding:8px}
+.profile-stat .s .n{font-size:18px;font-weight:800}
+.profile-stat .s .l{font-size:10px;opacity:.85;margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+.profile-list{padding:16px}
+.profile-item{background:white;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.profile-item .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:#F3F4F6}
+.profile-item .t{font-weight:700;font-size:14px}
+.profile-item .d{font-size:12px;color:var(--muted);margin-top:1px}
+.profile-item .arrow{margin-left:auto;color:var(--muted);font-size:18px}
+
+.toast{position:absolute;bottom:84px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:40;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
+.toast.show{opacity:1;transform:translate(-50%,-8px)}
+
+@media (max-width:1100px){.stage{grid-template-columns:1fr}.pitch{order:2;text-align:center}.right-pitch{order:3}.phone{order:1}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <aside class="pitch">
+    <div class="brand"><div class="logo-dot">B</div><div style="font-weight:800;font-size:18px;color:var(--indigo);">BharatBuddy</div></div>
+    <h1>India in one tap.<small>A true working prototype — search, book, save, plan &amp; SOS all persist. Installable on your phone.</small></h1>
+    <p class="tag">Everything you click <b>actually works</b>: real search, bookings saved to your device, real favorites, real AI trip planner that stores plans in My Trips. Built for <b>international visitors</b>, <b>domestic travelers</b>, and <b>backpackers</b>.</p>
+    <div class="chips"><span class="chip saffron">Installable PWA</span><span class="chip">Persistent data</span><span class="chip">Real search</span><span class="chip">24/7 SOS</span></div>
+    <div class="note"><b>Try the flow:</b> onboard → tap 🔍 and type "goa" → open a destination → Book a hotel → check My Trips (it saved) → heart a destination → open Profile. Refresh — everything stays.</div>
+    <button class="install-btn" id="installBtn" disabled>📱 Install on my phone</button>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5;">On iPhone: Share → "Add to Home Screen". On Android: the button activates automatically.</div>
+  </aside>
+
+  <div class="phone">
+    <div class="screen-container">
+      <div class="status-bar" id="statusBar"><span>9:41</span><span class="dots"><span></span><span></span><span></span><span></span></span></div>
+
+      <div class="onboard" id="onboard">
+        <div class="logo">B</div>
+        <h1>Welcome to BharatBuddy</h1>
+        <div class="sub-hero">India — explored, booked, and protected in one tap.</div>
+        <div class="step on" data-step="1">
+          <div class="of-label">What should we call you?</div>
+          <input type="text" id="obName" placeholder="e.g. Yash" autocomplete="off" />
+          <div class="of-label">Email</div>
+          <input type="email" id="obEmail" placeholder="you@email.com" autocomplete="off" />
+          <button class="obtn" onclick="obNext()">Continue →</button>
+        </div>
+        <div class="step" data-step="2">
+          <div class="of-label">I'm a…</div>
+          <div class="choice-grid" id="obPersona">
+            <div class="choice on" data-v="intl"><span class="big">🌍</span>International tourist</div>
+            <div class="choice" data-v="domestic"><span class="big">🇮🇳</span>Indian traveler</div>
+            <div class="choice" data-v="backpacker"><span class="big">🎒</span>Backpacker</div>
+            <div class="choice" data-v="luxury"><span class="big">💎</span>Luxury seeker</div>
+          </div>
+          <div class="of-label">Currency</div>
+          <select id="obCurrency"><option value="INR">₹ Indian Rupee</option><option value="USD">$ US Dollar</option><option value="EUR">€ Euro</option><option value="GBP">£ British Pound</option></select>
+          <button class="obtn" onclick="obNext()">Continue →</button>
+        </div>
+        <div class="step" data-step="3">
+          <div class="of-label">Language preference</div>
+          <div class="choice-grid" id="obLang">
+            <div class="choice on" data-v="English"><span class="big">🇬🇧</span>English</div>
+            <div class="choice" data-v="हिन्दी"><span class="big">🇮🇳</span>हिन्दी</div>
+            <div class="choice" data-v="Français"><span class="big">🇫🇷</span>Français</div>
+            <div class="choice" data-v="Español"><span class="big">🇪🇸</span>Español</div>
+            <div class="choice" data-v="Deutsch"><span class="big">🇩🇪</span>Deutsch</div>
+            <div class="choice" data-v="日本語"><span class="big">🇯🇵</span>日本語</div>
+          </div>
+          <button class="obtn" onclick="obFinish()">Start exploring ✨</button>
+          <div class="skip" onclick="obFinish()">Skip for now</div>
+        </div>
+      </div>
+
+      <div class="screen active" id="screen-home">
+        <div class="hero">
+          <div class="top-row">
+            <div class="greet"><span id="greetText">Namaste, traveler 🙏</span><b id="greetName">Welcome to India</b></div>
+            <div class="avatar" onclick="go('profile')" id="homeAvatar">Y</div>
+          </div>
+          <h2>Explore the <span>real India</span> — on your budget, on your terms.</h2>
+          <div class="search"><span style="font-size:16px;">🔍</span><input id="homeSearch" placeholder="Search: Jaipur, hotels, laal maas, trains…" oninput="runSearch(this.value)" onfocus="go('search')" /></div>
+        </div>
+        <div class="quick-actions">
+          <div class="qa stay" onclick="quickAction('stay')"><div class="qa-icon">🏨</div><div class="qa-label">Stay</div></div>
+          <div class="qa eat" onclick="quickAction('eat')"><div class="qa-icon">🍛</div><div class="qa-label">Eat</div></div>
+          <div class="qa ride" onclick="quickAction('travel')"><div class="qa-icon">🚗</div><div class="qa-label">Ride</div></div>
+          <div class="qa plan" onclick="go('plan')"><div class="qa-icon">✨</div><div class="qa-label">Plan</div></div>
+        </div>
+        <div class="copilot" id="copilotBanner" onclick="openModal('copilot')">
+          <div class="lbl">🧭 Cultural Co-pilot</div>
+          <div class="tip-text" id="copilotTip">Tap for tips on customs, tipping, and scam alerts near you.</div>
+        </div>
+        <div class="sec"><div class="sec-head"><h3>Trending destinations</h3><span class="link" onclick="go('explore')">See all</span></div></div>
+        <div class="dest-row" id="homeDestRow"></div>
+        <div class="sec" style="margin-top:6px;"><div class="sec-head"><h3>Plan by budget</h3><span class="link" onclick="go('plan')">Trip Genie →</span></div></div>
+        <div style="padding:0 20px;">
+          <div class="list-card" onclick="go('plan')">
+            <div class="thumb" style="background:linear-gradient(135deg,#10B981,#1E3A8A);color:white;display:grid;place-items:center;font-size:28px;">✨</div>
+            <div class="info"><div class="title">Let AI plan your trip</div><div class="sub">Tell us your budget + days → get a complete bookable itinerary</div><div class="meta"><span style="color:var(--good);font-weight:700;">⚡ Ready in 10 seconds</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-search">
+        <div class="page-head">
+          <button class="back-btn" onclick="go('home')">←</button>
+          <input id="searchInput" placeholder="Search destinations, hotels, food, trains…" oninput="runSearch(this.value)" style="flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:12px;font-size:14px;font-weight:500;outline:none;font-family:inherit;" />
+        </div>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+
+      <div class="screen" id="screen-explore">
+        <div class="page-head"><button class="back-btn" onclick="go('home')">←</button><h2>Explore India</h2></div>
+        <div class="filter-row" id="filterRow">
+          <div class="f on" data-filter="all">All</div>
+          <div class="f" data-filter="heritage">Heritage</div>
+          <div class="f" data-filter="beach">Beach</div>
+          <div class="f" data-filter="mountain">Mountain</div>
+          <div class="f" data-filter="spiritual">Spiritual</div>
+          <div class="f" data-filter="wildlife">Wildlife</div>
+        </div>
+        <div class="dest-grid" id="destGrid"></div>
+      </div>
+
+      <div class="screen" id="screen-detail">
+        <div style="padding:0 20px;">
+          <div class="dd-hero" id="detailHero">
+            <div class="back-abs" onclick="go('explore')">←</div>
+            <button class="heart" id="detailHeart" onclick="toggleFavCurrent()">♥</button>
+            <div class="dd-title"><h1 id="detailName">Jaipur</h1><div class="sub"><span>📍 <span id="detailState">Rajasthan</span></span><span>⭐ <span id="detailRating">4.8</span></span><span style="color:var(--good);">✓ Trust Verified</span></div></div>
+          </div>
+        </div>
+        <div class="dd-body">
+          <p class="dd-about" id="detailAbout">…</p>
+          <div class="dd-tabs">
+            <div class="dd-tab active" data-tab="stay" onclick="setTab('stay')">🏨 Stay</div>
+            <div class="dd-tab" data-tab="eat" onclick="setTab('eat')">🍛 Eat</div>
+            <div class="dd-tab" data-tab="travel" onclick="setTab('travel')">🚗 Travel</div>
+            <div class="dd-tab" data-tab="plan" onclick="setTab('plan')">✨ Plan</div>
+          </div>
+          <div id="tabContent"></div>
+        </div>
+      </div>
+
+      <div class="screen" id="screen-plan">
+        <div class="genie-head"><div class="sparkle">✨</div><h2>Trip Genie</h2><p>Tell me your dream trip — I'll build the whole thing.</p></div>
+        <form class="genie-form" id="genieForm" onsubmit="event.preventDefault();runGenie();">
+          <div class="field"><label>Your budget (₹)</label><input type="text" id="gBudget" value="15000" inputmode="numeric" /></div>
+          <div class="field"><label>Days</label><input type="text" id="gDays" value="4" inputmode="numeric" /></div>
+          <div class="field"><label>Starting from</label><select id="gCity"><option>Delhi</option><option>Mumbai</option><option>Bengaluru</option><option selected>New Delhi (International)</option><option>Kolkata</option></select></div>
+          <div class="field"><label>What do you love?</label>
+            <div class="pill-row" id="interestRow">
+              <div class="pill on" data-int="Food">🍛 Food</div>
+              <div class="pill on" data-int="History">🏛️ History</div>
+              <div class="pill" data-int="Beach">🏖️ Beach</div>
+              <div class="pill" data-int="Mountain">⛰️ Mountains</div>
+              <div class="pill" data-int="Spiritual">🕉️ Spiritual</div>
+              <div class="pill" data-int="Nightlife">🎉 Nightlife</div>
+              <div class="pill" data-int="Wildlife">🐅 Wildlife</div>
+            </div>
+          </div>
+          <button class="primary-btn" type="submit">✨ Generate my trip</button>
+        </form>
+        <div class="itin" id="itinOut"></div>
+      </div>
+
+      <div class="screen" id="screen-trips">
+        <div class="page-head"><button class="back-btn" onclick="go('home')">←</button><h2>My Trips</h2></div>
+        <div id="tripsList"></div>
+      </div>
+
+      <div class="screen" id="screen-sos">
+        <div class="sos-hero"><div class="ring">🚨</div><h2>Emergency Help — 24/7</h2><p>Tap the button below. We share your location, language &amp; emergency contact with the right service instantly.</p></div>
+        <button class="sos-big-btn" onclick="openModal('sosCall')"><span style="font-size:20px;">📞</span> Call SOS now</button>
+        <div class="sos-grid">
+          <div class="sos-tile" onclick="openModal('sosCall')"><div class="ico">🚓</div><div class="t">Tourist Police</div><div class="d">24/7 English</div></div>
+          <div class="sos-tile" onclick="openModal('sosCall')"><div class="ico">🚑</div><div class="t">Medical</div><div class="d">Ambulance &amp; hospital</div></div>
+          <div class="sos-tile" onclick="openModal('sosCall')"><div class="ico">👩</div><div class="t">Women's Helpline</div><div class="d">1091 • Anonymous</div></div>
+          <div class="sos-tile" onclick="openModal('sosCall')"><div class="ico">🛂</div><div class="t">Embassy Help</div><div class="d">Lost passport, visa</div></div>
+          <div class="sos-tile" onclick="openModal('scam')"><div class="ico">⚠️</div><div class="t">Scam Alert</div><div class="d">Report a scam</div></div>
+          <div class="sos-tile" onclick="openModal('sosCall')"><div class="ico">💬</div><div class="t">Live Chat</div><div class="d">Instant human support</div></div>
+        </div>
+        <div style="padding:18px 20px 0;"><div class="note" style="background:#FFF8E7;border:1px dashed var(--saffron);border-radius:14px;padding:12px 14px;font-size:12.5px;color:#434a63;line-height:1.5;"><b style="color:var(--saffron);">🔒 Your safety matters.</b> BharatBuddy auto-translates your emergency into the local language and shares verified nearest help within 60 seconds.</div></div>
+      </div>
+
+      <div class="screen" id="screen-profile">
+        <div class="profile-head">
+          <div class="avatar-big" id="profileAvatar">Y</div>
+          <div class="name" id="profileName">Traveler</div>
+          <div class="email" id="profileEmail">you@email.com</div>
+          <div class="profile-stat">
+            <div class="s"><div class="n" id="statTrips">0</div><div class="l">Trips</div></div>
+            <div class="s"><div class="n" id="statFav">0</div><div class="l">Favorites</div></div>
+            <div class="s"><div class="n" id="statLang">EN</div><div class="l">Language</div></div>
+          </div>
+        </div>
+        <div class="profile-list">
+          <div class="profile-item" onclick="go('trips')"><div class="ico">🎫</div><div><div class="t">My bookings</div><div class="d" id="bookingCount">0 trips saved</div></div><div class="arrow">›</div></div>
+          <div class="profile-item" onclick="showFavorites()"><div class="ico">❤️</div><div><div class="t">Saved destinations</div><div class="d" id="favCount">0 destinations</div></div><div class="arrow">›</div></div>
+          <div class="profile-item" onclick="openModal('langSwitch')"><div class="ico">🌐</div><div><div class="t">Language</div><div class="d" id="profileLang">English</div></div><div class="arrow">›</div></div>
+          <div class="profile-item" onclick="openModal('copilot')"><div class="ico">🧭</div><div><div class="t">Cultural Co-pilot tips</div><div class="d">Customs, tipping, scams</div></div><div class="arrow">›</div></div>
+          <div class="profile-item" onclick="openModal('logout')"><div class="ico">🚪</div><div><div class="t">Sign out &amp; clear data</div><div class="d">Start over from onboarding</div></div><div class="arrow">›</div></div>
+        </div>
+      </div>
+
+      <button class="sos-float" onclick="go('sos')">SOS</button>
+
+      <nav class="bottom-nav" id="bottomNav">
+        <div class="bn active" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11l9-8 9 8v10a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2V11z" stroke-linejoin="round"/></svg>Home</div>
+        <div class="bn" data-go="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>Explore</div>
+        <div class="bn" data-go="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l2.39 6.96H22l-6 4.36 2.3 7.02L12 15.98 5.7 20.34 8 13.32 2 8.96h7.61L12 2z" stroke-linejoin="round"/></svg>Plan</div>
+        <div class="bn" data-go="trips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V3m8 3V3M3 10h18" stroke-linecap="round"/></svg>Trips</div>
+        <div class="bn sos-nav" data-go="sos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l10 18H2L12 2z" stroke-linejoin="round"/><path d="M12 10v4m0 3h.01" stroke-linecap="round"/></svg>SOS</div>
+      </nav>
+
+      <div class="modal-bg" id="modalBg"><div class="modal" id="modalBox"><button class="close-x" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+      <div class="toast" id="toast">Saved!</div>
+    </div>
+  </div>
+
+  <aside class="pitch right-pitch">
+    <h3>Everything that really works</h3>
+    <div class="feature-list">
+      <div class="item"><div class="icon">🔍</div><div><div class="t">Real search</div><div class="d">Type in the search bar — finds destinations, hotels, restaurants, and trains.</div></div></div>
+      <div class="item"><div class="icon">❤️</div><div><div class="t">Save favorites</div><div class="d">Tap any heart — favorites persist on your device forever.</div></div></div>
+      <div class="item"><div class="icon">🎫</div><div><div class="t">Bookings that save</div><div class="d">Every booking lands in My Trips with a cancel button. Survives refresh.</div></div></div>
+      <div class="item"><div class="icon">✨</div><div><div class="t">Trip Genie, saved</div><div class="d">Generated itinerary → one tap to save it to Trips.</div></div></div>
+      <div class="item"><div class="icon">🚨</div><div><div class="t">24/7 Emergency SOS</div><div class="d">Floating red button on every screen. Modal-simulated call flow.</div></div></div>
+      <div class="item"><div class="icon">🧭</div><div><div class="t">Cultural Co-pilot</div><div class="d">Context tips that change based on which destination you viewed last.</div></div></div>
+      <div class="item"><div class="icon">📱</div><div><div class="t">Installable PWA</div><div class="d">Open on your phone → "Add to Home Screen" → works like a real app.</div></div></div>
+    </div>
+  </aside>
+</div>
+
+<script src="bharatbuddy.js"></script>
+</body>
+</html>
