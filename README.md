@@ -2,7 +2,7 @@
 
 > All-in-one India travel super app — hotels, restaurants, transport, budget-based trip planner, and 24/7 SOS. Installable PWA with offline support, 6 languages, and persistent state.
 
-**Live demo:** https://yashkhareta4.github.io/bharatbuddy/bharatbuddy.html
+**Live demo:** https://kharetayash.github.io/bharatbuddy/bharatbuddy.html
 
 BharatBuddy is a Progressive Web App built for three kinds of travelers in India — international tourists, domestic explorers, and budget backpackers. It consolidates what is usually six apps (Booking, Zomato, IRCTC, TripAdvisor, Google Maps, emergency dialers) into one fast, installable experience that works even on patchy rural networks.
 
